@@ -1,6 +1,7 @@
 package coupon
 
 import (
+	"github.com/ozonmp/omp-bot/internal/service/loyalty/coupon"
 	"log"
 	"strconv"
 	"strings"
@@ -23,22 +24,28 @@ func (c *LoyaltyCouponCommander) Edit(inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	coupon, err := c.service.Describe(uint64(idx - 1))
-	if err != nil {
+	if _, err := c.service.Describe(uint64(idx - 1)); err != nil {
 		log.Printf("fail to locate coupon with ID %d: %v", idx, err)
 		return
 	}
 
-	coupon.Code = args[1]
-	coupon.Percent = uint64(percent)
+    coupon := coupon.Coupon{Code: args[1], Percent: uint64(percent)}
 
-	msg := tgbotapi.NewMessage(
-		inputMessage.Chat.ID,
-		coupon.String(),
-	)
+	var msg tgbotapi.MessageConfig
+	if err := c.service.Update(uint64(idx-1), coupon); err != nil {
+		msg = tgbotapi.NewMessage(
+			inputMessage.Chat.ID,
+			err.Error(),
+		)
+	} else {
+		msg = tgbotapi.NewMessage(
+			inputMessage.Chat.ID,
+			coupon.String(),
+		)
+	}
 
 	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("LoyaltyCouponCommander.Get: error sending reply message to chat - %v", err)
+		log.Printf("LoyaltyCouponCommander.Edit: error sending reply message to chat - %v", err)
 	}
 }
