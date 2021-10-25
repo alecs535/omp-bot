@@ -29,7 +29,7 @@ func (c *LoyaltyCouponCommander) Edit(inputMessage *tgbotapi.Message) {
 		return
 	}
 
-    coupon := coupon.Coupon{Code: args[1], Percent: uint64(percent)}
+	coupon := coupon.Coupon{Code: args[1], Percent: uint(percent)}
 
 	var msg tgbotapi.MessageConfig
 	if err := c.service.Update(uint64(idx-1), coupon); err != nil {

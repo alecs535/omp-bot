@@ -19,7 +19,7 @@ func (c *LoyaltyCouponCommander) New(inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	idx, err := c.service.Create(service.Coupon{args[0], uint64(percent)})
+	idx, err := c.service.Create(service.Coupon{args[0], uint(percent)})
 	if err != nil {
 		log.Printf("fail to append coupon with args %v: %v", args, err)
 		return
