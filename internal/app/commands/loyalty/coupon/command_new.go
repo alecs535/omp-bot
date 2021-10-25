@@ -11,7 +11,7 @@ import (
 )
 
 func (c *LoyaltyCouponCommander) New(inputMessage *tgbotapi.Message) {
-	args := strings.SplitN(inputMessage.CommandArguments(), " ", 3)
+	args := strings.SplitN(inputMessage.CommandArguments(), " ", 2)
 
 	percent, err := strconv.Atoi(args[1])
 	if err != nil || percent < 0 {

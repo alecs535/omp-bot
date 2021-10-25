@@ -10,7 +10,7 @@ import (
 )
 
 func (c *LoyaltyCouponCommander) Edit(inputMessage *tgbotapi.Message) {
-	args := strings.SplitN(inputMessage.CommandArguments(), " ", 4)
+	args := strings.SplitN(inputMessage.CommandArguments(), " ", 3)
 
 	idx, err := strconv.Atoi(args[0])
 	if err != nil || idx < 0 {
