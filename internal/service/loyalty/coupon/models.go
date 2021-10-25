@@ -5,13 +5,12 @@ import (
 )
 
 type Coupon struct {
-	Code string
-	Percent uint64
+	Code    string
+	Percent uint // 0..100
 }
 
 var couponList []Coupon
 
 func (c *Coupon) String() string {
-	return fmt.Sprintf("Coupon %s - %d%s", c.Code, c.Percent, "%")
+	return fmt.Sprintf("Coupon %s - %d%%", c.Code, c.Percent)
 }
-
