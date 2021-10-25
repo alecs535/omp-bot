@@ -19,8 +19,8 @@ func (c *LoyaltyCouponCommander) Edit(inputMessage *tgbotapi.Message) {
 	}
 
 	percent, err := strconv.Atoi(args[2])
-	if err != nil || percent < 0 {
-		log.Printf("wrong args: need positive percent value (%s)", args[2])
+	if err != nil || percent < 0 || percent > 100 {
+		log.Printf("wrong args: need percent value in the range from 0 to 100 (%s)", args[2])
 		return
 	}
 

@@ -40,8 +40,8 @@ func (s *Service) Describe(couponID uint64) (*Coupon, error) {
 }
 
 func (s *Service) Create(coupon Coupon) (uint64, error) {
-	if coupon.Percent < 0 {
-		return 0, fmt.Errorf(": need positive percent value (%d)", coupon.Percent)
+	if coupon.Percent > 100 {
+		return 0, fmt.Errorf(": percent value cannot be more than 100 (%d)", coupon.Percent)
 	}
 	couponList = append(couponList, coupon)
 	return uint64(len(couponList)), nil
