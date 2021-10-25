@@ -12,6 +12,11 @@ import (
 func (c *LoyaltyCouponCommander) Edit(inputMessage *tgbotapi.Message) {
 	args := strings.SplitN(inputMessage.CommandArguments(), " ", 3)
 
+	if len(args) < 3 {
+		log.Println("wrong args: need used /edit__loyalty__coupon <id> <new_coupon_code> <new_percent>")
+		return
+	}
+
 	idx, err := strconv.Atoi(args[0])
 	if err != nil || idx < 0 {
 		log.Printf("wrong args, need exists ID of coupon (%s)", args[0])

@@ -13,6 +13,11 @@ import (
 func (c *LoyaltyCouponCommander) New(inputMessage *tgbotapi.Message) {
 	args := strings.SplitN(inputMessage.CommandArguments(), " ", 2)
 
+	if len(args) < 2 {
+		log.Println("wrong args: need used /new__loyalty__coupon <coupon_code> <percent>")
+		return
+	}
+
 	percent, err := strconv.Atoi(args[1])
 	if err != nil || percent < 0 {
 		log.Println("wrong args: need positive percent value", args[1])
