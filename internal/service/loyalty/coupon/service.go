@@ -5,11 +5,11 @@ import (
 )
 
 type CouponService interface {
-	Describe(CouponID uint64) (*Coupon, error)
+	Describe(couponID uint64) (*Coupon, error)
 	List(cursor uint64, limit uint64) ([]Coupon, error)
 	Create(Coupon) (uint64, error)
-	Update(CouponID uint64, coupon Coupon) error
-	Remove(CouponID uint64) (bool, error)
+	Update(couponID uint64, coupon Coupon) error
+	Remove(couponID uint64) (bool, error)
 }
 
 type Service struct{}
@@ -47,19 +47,19 @@ func (s *Service) Create(coupon Coupon) (uint64, error) {
 	return uint64(len(couponList)), nil
 }
 
-func (s *Service) Remove(CouponID uint64) (bool, error) {
-	if CouponID >= uint64(len(couponList)) {
-		return false, fmt.Errorf(": id range check error (%d)", CouponID)
+func (s *Service) Remove(couponID uint64) (bool, error) {
+	if couponID >= uint64(len(couponList)) {
+		return false, fmt.Errorf(": id range check error (%d)", couponID)
 	}
-	couponList = append(couponList[:CouponID], couponList[CouponID+1:]...)
+	couponList = append(couponList[:couponID], couponList[couponID+1:]...)
 	return true, nil
 }
 
-func (s *Service) Update(CouponID uint64, coupon Coupon) error {
-	if CouponID >= uint64(len(couponList)) {
-		return fmt.Errorf(": id range check error (%d)", CouponID)
+func (s *Service) Update(couponID uint64, coupon Coupon) error {
+	if couponID >= uint64(len(couponList)) {
+		return fmt.Errorf(": id range check error (%d)", couponID)
 	}
-	couponList[CouponID].Code = coupon.Code
-	couponList[CouponID].Percent = coupon.Percent
+	couponList[couponID].Code = coupon.Code
+	couponList[couponID].Percent = coupon.Percent
 	return nil
 }
